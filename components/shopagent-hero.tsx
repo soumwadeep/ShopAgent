@@ -2,10 +2,14 @@
 
 import Link from "next/link";
 import { motion, MotionConfig } from "framer-motion";
-import { ArrowRight, Menu, Play, Search, X } from "lucide-react";
+import { ArrowRight, LayoutDashboard, Menu, Monitor, Moon, Play, Search, Sun, X } from "lucide-react";
+import { signOut } from "firebase/auth";
 import { useState } from "react";
 import { HeroPhone } from "@/components/hero-phone";
 import { ShoppingComposer } from "@/components/shopping-composer";
+import { useAuth } from "@/components/auth-provider";
+import { useTheme } from "@/components/theme-provider";
+import { auth } from "@/lib/firebase";
 import styles from "./shopagent-hero.module.css";
 
 export function BrandMark() {
@@ -43,6 +47,15 @@ const entrance = {
 
 function HeroHeader() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [themeOpen, setThemeOpen] = useState(false);
+  const { user, ready } = useAuth();
+  const { theme, setTheme } = useTheme();
+  const fullName = user?.displayName?.trim() || user?.email?.split("@")[0] || "Account";
+  const name = fullName.split(/\s+/)[0];
+  const signOutUser = async () => {
+    await signOut(auth);
+    setMenuOpen(false);
+  };
   return (
     <header className={styles.header}>
       <Link href="/" className={styles.logo}>
@@ -66,15 +79,23 @@ function HeroHeader() {
         >
           <Search size={22} />
         </a>
-        <Link
-          href="/dashboard"
-          className={`${styles.outlineButton} ${styles.login}`}
-        >
-          Login
-        </Link>
-        <Link href="/dashboard/agent" className={styles.primaryButton}>
-          Start Free
-        </Link>
+        <div className={styles.themeWrap}>
+          <button type="button" className={styles.themeButton} aria-label="Appearance" aria-expanded={themeOpen} title="Appearance" onClick={() => setThemeOpen(!themeOpen)}>
+            {theme === "dark" ? <Moon size={20}/> : theme === "light" ? <Sun size={20}/> : <Monitor size={20}/>}
+          </button>
+          {themeOpen && <div className={styles.themeMenu} role="menu" aria-label="Appearance">
+            {(["light", "dark", "system"] as const).map(value => <button key={value} type="button" role="menuitemradio" aria-checked={theme === value} onClick={() => { setTheme(value); setThemeOpen(false); }}><span>{value === "light" ? <Sun size={17}/> : value === "dark" ? <Moon size={17}/> : <Monitor size={17}/>}</span>{value[0].toUpperCase() + value.slice(1)}</button>)}
+          </div>}
+        </div>
+        {ready && (user ? <>
+          <span className={styles.accountName} title={fullName}>Hi, {name}</span>
+          <Link href="/dashboard" className={`${styles.primaryButton} ${styles.dashboardButton}`}>Dashboard</Link>
+          <Link href="/dashboard" className={styles.mobileDashboard} aria-label="Dashboard" title="Dashboard"><LayoutDashboard size={20}/></Link>
+          <button type="button" onClick={signOutUser} className={`${styles.outlineButton} ${styles.signOutButton}`}>Sign out</button>
+        </> : <>
+          <Link href="/login" className={`${styles.outlineButton} ${styles.login}`}>Login</Link>
+          <Link href="/signup" className={styles.primaryButton}>Start Free</Link>
+        </>)}
         <button
           className={styles.menuButton}
           aria-label={menuOpen ? "Close navigation" : "Open navigation"}
@@ -91,7 +112,16 @@ function HeroHeader() {
               {label}
             </Link>
           ))}
-          <Link href="/dashboard">Login</Link>
+          {ready && (user ? <>
+            <Link onClick={() => setMenuOpen(false)} href="/dashboard">Dashboard</Link>
+            <button type="button" onClick={signOutUser}>Sign out</button>
+          </> : <>
+            <Link onClick={() => setMenuOpen(false)} href="/login">Login</Link>
+            <Link onClick={() => setMenuOpen(false)} href="/signup">Start Free</Link>
+          </>)}
+          <div className={styles.mobileTheme} aria-label="Appearance">
+            {(["light", "dark", "system"] as const).map(value => <button key={value} type="button" aria-pressed={theme === value} onClick={() => setTheme(value)}>{value[0].toUpperCase() + value.slice(1)}</button>)}
+          </div>
         </nav>
       )}
     </header>

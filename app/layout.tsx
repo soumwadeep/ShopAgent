@@ -2,6 +2,8 @@ import { Analytics } from "@vercel/analytics/next";
 import { Geist, Caveat } from "next/font/google";
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
+import { AuthProvider } from "@/components/auth-provider";
+import { ThemeProvider } from "@/components/theme-provider";
 
 const geist = Geist({ subsets: ["latin"], variable: "--font-geist" });
 const handwriting = Caveat({
@@ -17,8 +19,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  colorScheme: "light",
-  themeColor: "#f8f8f9",
+  colorScheme: "light dark",
 };
 
 export default function RootLayout({
@@ -27,11 +28,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="bg-background">
+    <html lang="en" className="bg-background" suppressHydrationWarning>
+      <head><script dangerouslySetInnerHTML={{ __html: "try{const t=localStorage.getItem('shopagent-theme');const d=t==='dark'||(t!=='light'&&matchMedia('(prefers-color-scheme: dark)').matches);document.documentElement.classList.toggle('dark',d)}catch{}" }} /></head>
       <body
         className={`${geist.variable} ${handwriting.variable} font-sans antialiased`}
       >
-        {children}
+        <ThemeProvider><AuthProvider>{children}</AuthProvider></ThemeProvider>
         {process.env.NODE_ENV === "production" && <Analytics />}
       </body>
     </html>

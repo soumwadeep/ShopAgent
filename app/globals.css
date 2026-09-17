@@ -24,33 +24,45 @@
 
 :root {
   color-scheme: light;
-  --background: oklch(0.975 0.012 285);
-  --foreground: oklch(0.2 0.025 275);
+  --background: oklch(0.975 0.004 240);
+  --foreground: oklch(0.21 0.018 245);
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.2 0.025 275);
-  --primary: oklch(0.52 0.19 291);
+  --card-foreground: oklch(0.21 0.018 245);
+  --primary: oklch(0.46 0.11 165);
   --primary-foreground: oklch(1 0 0);
-  --muted: oklch(0.94 0.025 285);
-  --muted-foreground: oklch(0.5 0.04 275);
-  --border: oklch(0.89 0.025 285);
-  --input: oklch(0.89 0.025 285);
-  --ring: oklch(0.65 0.16 291);
-  --radius: 0.9rem;
+  --muted: oklch(0.94 0.008 240);
+  --muted-foreground: oklch(0.48 0.02 245);
+  --border: oklch(0.88 0.01 240);
+  --input: oklch(0.88 0.01 240);
+  --ring: oklch(0.61 0.11 165);
+  --radius: 0.5rem;
 }
 
 .dark {
   color-scheme: dark;
-  --background: oklch(0.15 0.025 275);
-  --foreground: oklch(0.95 0.015 285);
-  --card: oklch(0.2 0.03 275);
-  --card-foreground: oklch(0.95 0.015 285);
-  --primary: oklch(0.72 0.16 291);
-  --primary-foreground: oklch(0.18 0.03 275);
-  --muted: oklch(0.25 0.035 275);
-  --muted-foreground: oklch(0.73 0.025 285);
+  --background: oklch(0.16 0.014 245);
+  --foreground: oklch(0.95 0.006 240);
+  --card: oklch(0.21 0.016 245);
+  --card-foreground: oklch(0.95 0.006 240);
+  --primary: oklch(0.75 0.11 165);
+  --primary-foreground: oklch(0.16 0.014 245);
+  --muted: oklch(0.28 0.017 245);
+  --muted-foreground: oklch(0.73 0.015 240);
   --border: oklch(1 0 0 / 12%);
   --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.72 0.16 291);
+  --ring: oklch(0.75 0.11 165);
+}
+
+.shopagent-home {
+  --primary: #623bff;
+  --primary-foreground: #ffffff;
+  --ring: #8064ff;
+}
+
+.dark .shopagent-home {
+  --primary: #ae98ff;
+  --primary-foreground: #171321;
+  --ring: #ae98ff;
 }
 
 * {
@@ -63,6 +75,6 @@ body {
 }
 
 ::selection {
-  background: oklch(0.82 0.12 291);
-  color: oklch(0.2 0.025 275);
+  background: oklch(0.82 0.08 165);
+  color: oklch(0.21 0.018 245);
 }

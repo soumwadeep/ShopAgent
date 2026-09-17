@@ -1,0 +1,2 @@
+sku,title,price,product_url,image_url,gtin,availability,pincode,delivery_minutes,delivery_fee
+DEMO-001,Example headphones,2499,https://www.croma.com/example-headphones,,8901234567890,in_stock,700001,120,49

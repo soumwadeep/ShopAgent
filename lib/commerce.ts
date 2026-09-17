@@ -14,7 +14,7 @@ export const purchaseReview: PurchaseReview = { id: "review-sony-260913", produc
 export const approvePurchaseReview = async (id: string) => { const response = await fetch(`/api/purchase-reviews/${id}/approve`, { method: "POST" }); const payload = await response.json().catch(() => null) as { error?: string; reason?: string } | null; if (!response.ok) throw new Error(payload?.reason || payload?.error || "Purchase couldn't be completed."); return payload }
 export type PostPurchase = { returnEligible: boolean; exchangeEligible: boolean; refundEligible: boolean; supportAvailable: boolean; returnWindow: string; refundStatus: "Not requested" | "Refund requested" | "Refund processing" | "Refund completed"; refundAmount: number; refundMethod: string; refundProcessingTime: string }
 export type CommerceOrder = {
-  id: string; kind: OrderKind; title: string; seller: string; amount: number; budgetLimit?: number; savings: number; status: OrderStatus; eta: string; date: string; image: string
+  id: string; kind: OrderKind; title: string; seller: string; amount: number; budgetLimit?: number; savings: number; status: OrderStatus; eta: string; date: string; image: string; location?: string
   items: OrderItem[]; pricing: OrderPricing; delivery: { location: string; method: string; estimated: string }; payment: string; reference: string
   decision: string; decisionFactors: string[]; decisionReason: string; eligibleForQuickDelivery: boolean; postPurchase?: PostPurchase
   timeline: { label: string; detail: string; done: boolean; current?: boolean }[]

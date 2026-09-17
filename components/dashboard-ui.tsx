@@ -167,6 +167,9 @@ export function Shell({
             </div>
           </div>
           <div ref={panelRef} className="relative flex items-center gap-3">
+            <Link href="/" aria-label="Main home" title="Main home" className="grid size-9 place-items-center rounded-full border border-black/10 hover:bg-black/5">
+              <Home size={17} />
+            </Link>
             <button
               onClick={() => toggle("search")}
               className="hidden rounded-full border border-black/10 p-2.5 sm:block"
@@ -338,7 +341,7 @@ export function Shell({
             className="flex flex-col items-center gap-1 text-[10px] text-black/50"
           >
             <Icon size={18} />
-            <span>{label === "AI assistant" ? "Agent" : label}</span>
+            <span>{label}</span>
           </Link>
         ))}
       </nav>

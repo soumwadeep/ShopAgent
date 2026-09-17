@@ -1,0 +1,19 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /users/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+      match /searches/{searchId} {
+        allow read: if request.auth != null && request.auth.uid == userId;
+        allow create: if request.auth != null && request.auth.uid == userId
+          && request.resource.data.keys().hasOnly(['text', 'market', 'createdAt'])
+          && request.resource.data.text is string
+          && request.resource.data.text.size() >= 2
+          && request.resource.data.text.size() <= 120
+          && request.resource.data.market in ['IN', 'US', 'GB'];
+        allow update, delete: if false;
+      }
+    }
+    match /{document=**} { allow read, write: if false; }
+  }
+}

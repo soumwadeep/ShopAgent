@@ -472,7 +472,7 @@ function ShoppingSections() {
 
 export default function HomePage() {
   return (
-    <main className="min-h-screen bg-background font-sans text-foreground">
+    <main className="shopagent-home min-h-screen bg-background font-sans text-foreground">
       <ShopAgentHero />
       <ShoppingSections />
     </main>

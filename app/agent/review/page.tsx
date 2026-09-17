@@ -12,7 +12,7 @@ function RecommendationReviewContent() {
   const productId = params.get("productId") ?? "sony-wh-1000xm5"
   const optionId = params.get("recommendedOptionId") ?? "croma"
   const product = products.find((item) => item.id === productId) ?? products[0]
-  const recommendation = dashboardState.recommendation.recommendation
+  const recommendation = dashboardState.recommendation.recommendation as { bestMatch: import("@/lib/shopagent-dashboard").RecommendationOption; alternatives: import("@/lib/shopagent-dashboard").RecommendationOption[] }
   const best = recommendation.bestMatch.id === optionId ? recommendation.bestMatch : recommendation.bestMatch
   const [showOptions, setShowOptions] = useState(false)
   const [selectedId, setSelectedId] = useState(best.id)

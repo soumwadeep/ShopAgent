@@ -9,7 +9,7 @@ import { GlobalHeader } from "@/components/global-header"
 function ReviewContent() {
   const params = new URLSearchParams(typeof window === "undefined" ? "" : window.location.search)
   const selectedId = params.get("recommendedOptionId") ?? dashboardState.recommendation.recommendation.bestMatch.id
-  const recommendation = dashboardState.recommendation
+  const recommendation = dashboardState.recommendation as import("@/lib/shopagent-dashboard").Recommendation
   const options = [recommendation.recommendation.bestMatch, ...recommendation.recommendation.alternatives]
   const initial = options.find((option) => option.id === selectedId) ?? recommendation.recommendation.bestMatch
   const [chosenId, setChosenId] = useState(initial.id)
